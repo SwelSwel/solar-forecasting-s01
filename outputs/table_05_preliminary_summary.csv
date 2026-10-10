@@ -1,0 +1,10 @@
+Item,Value
+Study period,2023-01-01 to 2024-12-31
+5-min records,210528
+Unique calendar days,731
+Duplicate timestamps,0
+Missing P values,335
+Mean power (kW),1067.9637195787795
+Maximum observed power (kW),5552.26
+Power skewness,1.0864602563549022
+PYRANO1-P correlation,0.9870533506683448

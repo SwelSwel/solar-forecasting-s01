@@ -1,3 +1,23 @@
+# === Project-specific ===
+
+# PEA Excel data — too large and sensitive for GitHub
+data/
+*.xlsx
+
+# CSV files (except outputs)
+*.csv
+!outputs/*.csv
+
+# Notebook outputs (nbstripout handles this, but just in case)
+.ipynb_checkpoints/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Cache files
+S01_2023_2024_5min_cache_v2.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
