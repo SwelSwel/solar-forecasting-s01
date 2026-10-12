@@ -1,0 +1,8 @@
+Issue,Problem,Rows affected,Handling
+Issue 5,Negative P,864,Flagged only (not clipped)
+Issue 6,WINDSPEED stuck at 60,21609,Set to NaN
+Issue 7,Wind spikes > 20 m/s,6,Set to NaN
+Issue 8,Logger dropout (all sensors = 0),659,Sensors → NaN
+Issue 10,AMBTEMP stuck at 50 °C,2484,Set to NaN
+Issue 12,Possible outage days (day-level flag),864,Flagged (excluded in Task 3)
+Issue 15,Frozen (stale) sensor values,526,Weather → NaN

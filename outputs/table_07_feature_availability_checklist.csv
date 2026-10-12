@@ -1,0 +1,18 @@
+Feature,Source,Latest data used,Available by 23:55?
+P_lag1,"P at interval i, day d-1",Day d-1 23:45,Yes
+P_lag2,"P at interval i, day d-2",Day d-2 23:45,Yes
+P_lag7,"P at interval i, day d-7",Day d-7 23:45,Yes
+P_roll7,"Rolling mean of P at interval i, days d-7 to d-1",Day d-1 23:45,Yes
+irr_lag1,"Irradiance at interval i, day d-1",Day d-1 23:45,Yes
+pv_temp_lag1,"PV module temp at interval i, day d-1",Day d-1 23:45,Yes
+amb_lag1,"Ambient temp at interval i, day d-1",Day d-1 23:45,Yes
+wind_lag1,"Wind speed at interval i, day d-1",Day d-1 23:45,Yes
+interval_sin,sin(2pi * interval / 96),Calendar (known),Yes
+interval_cos,cos(2pi * interval / 96),Calendar (known),Yes
+doy_sin,sin(2pi * day_of_year / 365.25),Calendar (known),Yes
+doy_cos,cos(2pi * day_of_year / 365.25),Calendar (known),Yes
+month_sin,sin(2pi * month / 12),Calendar (known),Yes
+month_cos,cos(2pi * month / 12),Calendar (known),Yes
+dow,Day of week (0-6),Calendar (known),Yes
+energy_roll7_mean,"Rolling mean of daily energy, days d-7 to d-1",Day d-1 23:45,Yes
+energy_roll7_std,"Rolling std of daily energy, days d-7 to d-1",Day d-1 23:45,Yes
