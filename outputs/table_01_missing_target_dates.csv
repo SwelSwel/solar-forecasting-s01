@@ -1,0 +1,10 @@
+date,source_sheet_present,source_5min_rows,source_p_missing_5min,loaded_5min_rows,loaded_unique_timestamps,raw_p_missing_5min,valid_intervals,complete_96,low_completeness,source_loader_status,raw_row_coverage_%,timestamp_row_difference,P_missing_difference,target_interval_coverage_%,target_status
+2023-03-20,True,288,29,288,288,29,85,False,False,source P values missing,100.0,0,0,88.54,incomplete P; intervals are excluded from loss
+2023-03-21,True,288,7,288,288,7,93,False,False,source P values missing,100.0,0,0,96.88,incomplete P; intervals are excluded from loss
+2023-04-24,True,288,73,288,288,73,71,False,True,source P values missing,100.0,0,0,73.96,incomplete P; intervals are excluded from loss
+2023-05-01,True,288,6,288,288,6,93,False,False,source P values missing,100.0,0,0,96.88,incomplete P; intervals are excluded from loss
+2023-05-29,True,288,8,288,288,8,92,False,False,source P values missing,100.0,0,0,95.83,incomplete P; intervals are excluded from loss
+2023-06-09,True,288,9,288,288,9,92,False,False,source P values missing,100.0,0,0,95.83,incomplete P; intervals are excluded from loss
+2023-09-06,True,288,4,288,288,4,94,False,False,source P values missing,100.0,0,0,97.92,incomplete P; intervals are excluded from loss
+2023-11-26,True,288,125,288,288,125,53,False,True,source P values missing,100.0,0,0,55.21,incomplete P; intervals are excluded from loss
+2023-11-27,True,288,74,288,288,74,71,False,True,source P values missing,100.0,0,0,73.96,incomplete P; intervals are excluded from loss

@@ -1,0 +1,6 @@
+Input,Threshold,Interpretation
+WINDSPEED,= 60,Retained study heuristic; confirm sensor code/units
+WINDSPEED,> 20 m/s,Study threshold; sensitivity/site validation required
+All six weather sensors,= 0,Possible logger issue; P is not masked
+AMBTEMP,= 50 C,Retained study heuristic; confirm sensor range
+AMBTEMP and PVTEMP1,12 identical consecutive 5-min readings,"Trailing-only detector; mask from reading 12, without backfilling"

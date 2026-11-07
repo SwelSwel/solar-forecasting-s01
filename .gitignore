@@ -4,6 +4,10 @@
 data/
 *.xlsx
 
+data/
+__pycache__/
+*.pyc
+
 # CSV files (except outputs)
 *.csv
 !outputs/*.csv

@@ -1,0 +1,51 @@
+Feature,Source,Max source lag (days),Available before forecast,Forecast issue deadline,Value provenance check
+P_lag1,"P, day D-1",1,True,D-1 23:55,PASS
+P_lag2,"P, day D-2",2,True,D-1 23:55,PASS
+P_lag7,"P, day D-7",7,True,D-1 23:55,PASS
+P_roll7,"P, same interval during days D-1 to D-7",7,True,D-1 23:55,PASS
+amb_lag1,"AMBTEMP, day D-1",1,True,D-1 23:55,PASS
+clear_sky_index,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+clearsky_ghi,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+dow,calendar known at forecast time,0,True,D-1 23:55,PASS
+doy_cos,calendar known at forecast time,0,True,D-1 23:55,PASS
+doy_sin,calendar known at forecast time,0,True,D-1 23:55,PASS
+energy_roll7_mean,daily P energy during days D-1 to D-7,7,True,D-1 23:55,PASS
+energy_roll7_std,daily P energy during days D-1 to D-7,7,True,D-1 23:55,PASS
+fcst_apparent_temp,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_cloud,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_cloud_high,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_cloud_low,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_cloud_mid,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_cloud_x_ghi,Derived from forecast weather and/or D-1 on-site data,0,True,D-1 23:55,PASS
+fcst_dewpoint,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_diffuse_rad,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_diffuse_ratio,Derived from forecast weather and/or D-1 on-site data,0,True,D-1 23:55,PASS
+fcst_direct_rad,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_dni,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_ghi,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_ghi_change,Derived from forecast weather and/or D-1 on-site data,0,True,D-1 23:55,PASS
+fcst_humidity,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_precip,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_pressure,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_sunshine_sec,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_temp,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_temp_sq,Derived from forecast weather and/or D-1 on-site data,0,True,D-1 23:55,PASS
+fcst_vpd,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_wind,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+fcst_windgusts,Open-Meteo day-ahead weather forecast for day D,0,True,D-1 23:55,PASS
+hours_above_1mw_lag1,Derived from forecast weather and/or D-1 on-site data,0,True,D-1 23:55,PASS
+interval_cos,calendar known at forecast time,0,True,D-1 23:55,PASS
+interval_sin,calendar known at forecast time,0,True,D-1 23:55,PASS
+irr_lag1,"irradiance, day D-1",1,True,D-1 23:55,PASS
+irr_variability_lag1,Derived from forecast weather and/or D-1 on-site data,0,True,D-1 23:55,PASS
+month_cos,calendar known at forecast time,0,True,D-1 23:55,PASS
+month_sin,calendar known at forecast time,0,True,D-1 23:55,PASS
+nasa_clearness_index,NASA POWER satellite-derived data for day D,0,True,D-1 23:55,PASS
+nasa_clearsky_ghi,NASA POWER satellite-derived data for day D,0,True,D-1 23:55,PASS
+nasa_ghi,NASA POWER satellite-derived data for day D,0,True,D-1 23:55,PASS
+nasa_humidity,NASA POWER satellite-derived data for day D,0,True,D-1 23:55,PASS
+nasa_temp,NASA POWER satellite-derived data for day D,0,True,D-1 23:55,PASS
+nasa_wind,NASA POWER satellite-derived data for day D,0,True,D-1 23:55,PASS
+peak_power_lag1,Derived from forecast weather and/or D-1 on-site data,0,True,D-1 23:55,PASS
+pv_temp_lag1,"pv_temp, day D-1",1,True,D-1 23:55,PASS
+wind_lag1,"WINDSPEED, day D-1",1,True,D-1 23:55,PASS
