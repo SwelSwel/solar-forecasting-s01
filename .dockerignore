@@ -1,0 +1,15 @@
+data/
+*.xlsx
+*.csv
+__pycache__/
+*.pyc
+.git/
+.gitignore
+notebooks/
+outputs/
+*.ipynb
+.ipynb_checkpoints/
+.venv/
+venv/
+DEPLOY.md
+deploy_aws.sh
