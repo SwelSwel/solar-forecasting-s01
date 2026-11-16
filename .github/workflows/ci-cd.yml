@@ -1,0 +1,161 @@
+# ==========================================================================
+# CI/CD Pipeline — S01 Solar Power Forecast
+# Build, test, and deploy Streamlit app to Azure Container Apps
+# ==========================================================================
+
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  # ========================================================================
+  # Job 1: Test
+  # ========================================================================
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate app imports
+        run: |
+          python -c "
+          import streamlit, xgboost, pandas, numpy, sklearn, requests
+          print('All imports OK')
+          "
+
+      - name: Validate model file
+        run: |
+          python -c "
+          import joblib
+          from pathlib import Path
+          p = Path('models/xgboost_v2.pkl')
+          if not p.exists():
+              print('WARNING: Model file not found — app will error on startup')
+              exit(0)
+          a = joblib.load(p)
+          assert 'model' in a, 'Missing model key'
+          assert 'feature_names' in a, 'Missing feature_names key'
+          n = len(a['feature_names'])
+          mae = a.get('test_mae', 'N/A')
+          ver = a.get('version', 'unknown')
+          print(f'Model OK: {ver}, {n} features, MAE={mae}')
+          "
+
+      - name: Validate Dockerfile
+        run: |
+          docker build -t solar-forecast-test .
+          echo "Docker build OK"
+
+  # ========================================================================
+  # Job 2: Deploy to Azure Container Apps
+  # ========================================================================
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: production
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Login to ACR
+        run: az acr login --name ${{ vars.ACR_NAME }}
+
+      - name: Build and push Docker image
+        run: |
+          IMAGE="${{ vars.ACR_NAME }}.azurecr.io/${{ vars.APP_NAME }}:${{ github.sha }}"
+          IMAGE_LATEST="${{ vars.ACR_NAME }}.azurecr.io/${{ vars.APP_NAME }}:latest"
+          docker build -t "$IMAGE" -t "$IMAGE_LATEST" .
+          docker push "$IMAGE"
+          docker push "$IMAGE_LATEST"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+
+      - name: Deploy to Container Apps
+        run: |
+          # Check if app exists
+          EXISTS=$(az containerapp show \
+            --name ${{ vars.APP_NAME }} \
+            --resource-group ${{ vars.RESOURCE_GROUP }} \
+            --query "name" -o tsv 2>/dev/null || echo "")
+
+          if [ -z "$EXISTS" ]; then
+            echo "Creating new Container App..."
+            az containerapp create \
+              --name ${{ vars.APP_NAME }} \
+              --resource-group ${{ vars.RESOURCE_GROUP }} \
+              --environment ${{ vars.ACA_ENV }} \
+              --image "$IMAGE" \
+              --registry-server ${{ vars.ACR_NAME }}.azurecr.io \
+              --registry-identity ${{ vars.PULL_IDENTITY_ID }} \
+              --target-port 8501 \
+              --ingress external \
+              --cpu 0.5 --memory 1 \
+              --min-replicas 0 \
+              --max-replicas 2 \
+              --env-vars APP_VERSION=${{ github.sha }} \
+              --query "properties.configuration.ingress.fqdn" -o tsv
+          else
+            echo "Updating existing Container App..."
+            az containerapp update \
+              --name ${{ vars.APP_NAME }} \
+              --resource-group ${{ vars.RESOURCE_GROUP }} \
+              --image "$IMAGE" \
+              --set-env-vars APP_VERSION=${{ github.sha }} \
+              --query "properties.configuration.ingress.fqdn" -o tsv
+          fi
+
+      - name: Get app URL
+        run: |
+          FQDN=$(az containerapp show \
+            --name ${{ vars.APP_NAME }} \
+            --resource-group ${{ vars.RESOURCE_GROUP }} \
+            --query "properties.configuration.ingress.fqdn" -o tsv)
+          echo "============================================"
+          echo "  App live at: https://$FQDN"
+          echo "============================================"
+
+      - name: Smoke test
+        run: |
+          FQDN=$(az containerapp show \
+            --name ${{ vars.APP_NAME }} \
+            --resource-group ${{ vars.RESOURCE_GROUP }} \
+            --query "properties.configuration.ingress.fqdn" -o tsv)
+          echo "Waiting for app to start..."
+          for i in $(seq 1 12); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://$FQDN/_stcore/health" || echo "000")
+            if [ "$STATUS" = "200" ]; then
+              echo "Health check passed (attempt $i)"
+              exit 0
+            fi
+            echo "  Attempt $i: status=$STATUS, retrying in 15s..."
+            sleep 15
+          done
+          echo "WARNING: Health check did not pass after 3 minutes"
+          exit 1
